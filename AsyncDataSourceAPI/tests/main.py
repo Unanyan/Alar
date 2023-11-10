@@ -1,8 +1,12 @@
+import sys
+
+sys.path.append("/path/to/your/project")
 import json
 import asyncio
 import pytest
 from fastapi.testclient import TestClient
 from AsyncDataSourceAPI.main import app, get_data_from_db
+
 
 client = TestClient(app)
 

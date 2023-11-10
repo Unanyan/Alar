@@ -1,17 +1,20 @@
 from fastapi import FastAPI
+import sys
+
+sys.path.append("/path/to/your/project")
 import aiosqlite
 import asyncio
-import json
 import subprocess
+from utils import (
+    format_data,
+    sort_data,
+)
+from config.settings import DATABASE_URL
 
 app = FastAPI()
 
-DATABASE_URL = "data.db"
-
 
 async def get_data_from_db(db, query):
-    # TODO move TimeoutError simulation to test
-    # await asyncio.sleep(2)
     async with db.execute(query) as cursor:
         return await cursor.fetchall()
 
@@ -37,13 +40,12 @@ async def get_data():
         try:
             data_1, data_2, data_3 = await asyncio.gather(*tasks)
 
-            # Convert the result into dictionaries
-            formatted_data_1 = [{"id": row[0], "name": row[1]} for row in data_1]
-            formatted_data_2 = [{"id": row[0], "name": row[1]} for row in data_2]
-            formatted_data_3 = [{"id": row[0], "name": row[1]} for row in data_3]
+            formatted_data_1 = format_data(data_1)
+            formatted_data_2 = format_data(data_2)
+            formatted_data_3 = format_data(data_3)
 
             all_data = formatted_data_1 + formatted_data_2 + formatted_data_3
-            all_data = sorted(all_data, key=lambda all_data: all_data["id"])
+            all_data = sort_data(all_data)
 
             return all_data
         except Exception as e:

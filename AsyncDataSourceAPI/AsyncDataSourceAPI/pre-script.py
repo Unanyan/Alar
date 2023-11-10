@@ -49,7 +49,7 @@ insert_query_1 = text("INSERT INTO data_1 (id, name) VALUES (:id, :name)")
 
 with engine.begin() as connection:
     for entry in data_to_insert_1:
-        connection.execute(insert_query_1, **entry)
+        connection.execute(insert_query_1, entry)
 
 data_to_insert_2 = [
     {"id": 12, "name": "Data 2-1"},
@@ -61,7 +61,7 @@ insert_query_2 = text("INSERT INTO data_2 (id, name) VALUES (:id, :name)")
 
 with engine.begin() as connection:
     for entry in data_to_insert_2:
-        connection.execute(insert_query_2, **entry)
+        connection.execute(insert_query_2, entry)
 
 data_to_insert_3 = [
     {"id": 22, "name": "Data 3-1"},
@@ -73,7 +73,7 @@ insert_query_3 = text("INSERT INTO data_3 (id, name) VALUES (:id, :name)")
 
 with engine.begin() as connection:
     for entry in data_to_insert_3:
-        connection.execute(insert_query_3, **entry)
+        connection.execute(insert_query_3, entry)
 
 
 # TODO move select statements to test
